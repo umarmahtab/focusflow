@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FocusFlow — Productivity App</title>
+  <meta name="description" content="A clean, fast Productivity App by Umar Mahtab: tasks, categories, due dates, stats, dark mode." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">UM</div>
+        <div class="title">
+          <h1>FocusFlow</h1>
+          <p class="muted">by Umar Mahtab</p>
+        </div>
+      </div>
+
+      <nav class="filters">
+        <h2>Filters</h2>
+        <div class="chip-row" id="chipRow">
+          <button class="chip is-active" data-filter="all">All</button>
+          <button class="chip" data-filter="today">Today</button>
+          <button class="chip" data-filter="overdue">Overdue</button>
+          <button class="chip" data-filter="completed">Completed</button>
+          <button class="chip" data-filter="pending">Pending</button>
+        </div>
+
+        <div class="group">
+          <label class="label" for="categoryFilter">Category</label>
+          <select id="categoryFilter" class="input">
+            <option value="all">All</option>
+            <option>Study</option>
+            <option>Work</option>
+            <option>Personal</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <label class="label" for="sortBy">Sort</label>
+          <select id="sortBy" class="input">
+            <option value="createdDesc">Newest first</option>
+            <option value="createdAsc">Oldest first</option>
+            <option value="dueAsc">Due date ↑</option>
+            <option value="dueDesc">Due date ↓</option>
+            <option value="priorityDesc">Priority ↓</option>
+            <option value="priorityAsc">Priority ↑</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <label class="label" for="search">Search</label>
+          <input id="search" class="input" placeholder="Type to filter ( / )" />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="group row">
+          <button id="exportBtn" class="btn">Export JSON</button>
+          <button id="importBtn" class="btn">Import</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json" hidden />
+      </nav>
+
+      <div class="footer muted">
+        <button id="themeBtn" class="btn small">Toggle Theme</button>
+        <p>Data stored locally • No accounts</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="toolbar">
+        <form id="newTaskForm" class="card add-form">
+          <input id="title" class="input big" placeholder="What do you need to do?" autocomplete="off" required />
+          <div class="row">
+            <div class="group">
+              <label class="label" for="due">Due date</label>
+              <input id="due" class="input" type="date" />
+            </div>
+            <div class="group">
+              <label class="label" for="category">Category</label>
+              <select id="category" class="input">
+                <option>Study</option>
+                <option>Work</option>
+                <option>Personal</option>
+              </select>
+            </div>
+            <div class="group">
+              <label class="label" for="priority">Priority</label>
+              <select id="priority" class="input">
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+                <option value="1">Low</option>
+              </select>
+            </div>
+            <button class="btn primary" type="submit" title="Add task (Enter)">Add Task</button>
+          </div>
+        </form>
+
+        <section class="stats card" id="stats">
+          <div><b id="countTotal">0</b><span>Total</span></div>
+          <div><b id="countPending">0</b><span>Pending</span></div>
+          <div><b id="countToday">0</b><span>Due today</span></div>
+          <div><b id="countCompleted">0</b><span>Completed</span></div>
+        </section>
+      </header>
+
+      <section class="list card">
+        <ul id="taskList" class="tasks" aria-live="polite"></ul>
+        <div id="empty" class="empty muted">
+          <p>No tasks yet. Add your first task above 🚀</p>
+        </div>
+      </section>
+
+      <footer class="fineprint">
+        <p>Built with vanilla JavaScript. Keyboard shortcuts: <kbd>/</kbd> search • <kbd>n</kbd> new task • <kbd>?</kbd> help</p>
+      </footer>
+    </main>
+  </div>
+
+  <template id="taskTemplate">
+    <li class="task" draggable="true">
+      <label class="checkbox">
+        <input type="checkbox" class="toggle" />
+        <span class="check"></span>
+      </label>
+      <div class="content">
+        <input class="task-title" />
+        <div class="meta">
+          <span class="badge due"></span>
+          <span class="badge category"></span>
+          <span class="badge priority"></span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="icon edit" title="Edit">✏️</button>
+        <button class="icon delete" title="Delete">🗑️</button>
+      </div>
+    </li>
+  </template>
+
+  <dialog id="helpDialog" class="dialog">
+    <h3>Keyboard Shortcuts</h3>
+    <ul>
+      <li><kbd>/</kbd> Focus search</li>
+      <li><kbd>n</kbd> New task</li>
+      <li><kbd>Esc</kbd> Clear search / close dialog</li>
+      <li><kbd>Enter</kbd> Add task</li>
+    </ul>
+    <form method="dialog">
+      <button class="btn">Close</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
