@@ -1,4 +1,4 @@
-# FocusFlow — Vanilla JS Productivity App
+# FocusFlow — Productivity App
 
 A clean, fast **to‑do app** built with **HTML + CSS + JavaScript** (no frameworks). Perfect as a student project to show JavaScript skills.
 
