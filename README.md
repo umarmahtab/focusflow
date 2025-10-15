@@ -3,6 +3,7 @@
 A clean, fast **to‑do app** built with **HTML + CSS + JavaScript** (no frameworks). Perfect as a student project to show JavaScript skills.
 
 ## Screenshots
+<img src="./assets/ss.png" width="45%" />
 
 ## Features
 - Add tasks with **title + due date + category + priority**
